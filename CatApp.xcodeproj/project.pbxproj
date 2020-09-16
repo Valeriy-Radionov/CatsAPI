@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		2A04632C25124C2E0086A6DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04632B25124C2E0086A6DF /* AppDelegate.swift */; };
 		2A04632E25124C2E0086A6DF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04632D25124C2E0086A6DF /* SceneDelegate.swift */; };
-		2A04633025124C2E0086A6DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04632F25124C2E0086A6DF /* ViewController.swift */; };
-		2A04633325124C2E0086A6DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A04633125124C2E0086A6DF /* Main.storyboard */; };
 		2A04633525124C300086A6DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A04633425124C300086A6DF /* Assets.xcassets */; };
 		2A04633825124C300086A6DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A04633625124C300086A6DF /* LaunchScreen.storyboard */; };
+		2A04634125124C780086A6DF /* CatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04633F25124C780086A6DF /* CatsVC.swift */; };
+		2A04634225124C780086A6DF /* CatsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A04634025124C780086A6DF /* CatsVC.xib */; };
+		2A04634525124EA70086A6DF /* CatInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04634325124EA70086A6DF /* CatInformationCell.swift */; };
+		2A04634625124EA70086A6DF /* CatInformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A04634425124EA70086A6DF /* CatInformationCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2A04632825124C2E0086A6DF /* CatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A04632B25124C2E0086A6DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A04632D25124C2E0086A6DF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2A04632F25124C2E0086A6DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2A04633225124C2E0086A6DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2A04633425124C300086A6DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A04633725124C300086A6DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A04633925124C300086A6DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A04633F25124C780086A6DF /* CatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsVC.swift; sourceTree = "<group>"; };
+		2A04634025124C780086A6DF /* CatsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatsVC.xib; sourceTree = "<group>"; };
+		2A04634325124EA70086A6DF /* CatInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatInformationCell.swift; sourceTree = "<group>"; };
+		2A04634425124EA70086A6DF /* CatInformationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatInformationCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +62,39 @@
 			children = (
 				2A04632B25124C2E0086A6DF /* AppDelegate.swift */,
 				2A04632D25124C2E0086A6DF /* SceneDelegate.swift */,
-				2A04632F25124C2E0086A6DF /* ViewController.swift */,
-				2A04633125124C2E0086A6DF /* Main.storyboard */,
+				2A04634725124EB30086A6DF /* Cell */,
+				2A04634825124EBD0086A6DF /* ViewControllers */,
 				2A04633425124C300086A6DF /* Assets.xcassets */,
 				2A04633625124C300086A6DF /* LaunchScreen.storyboard */,
 				2A04633925124C300086A6DF /* Info.plist */,
 			);
 			path = CatApp;
+			sourceTree = "<group>";
+		};
+		2A04634725124EB30086A6DF /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				2A04634325124EA70086A6DF /* CatInformationCell.swift */,
+				2A04634425124EA70086A6DF /* CatInformationCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		2A04634825124EBD0086A6DF /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2A04633F25124C780086A6DF /* CatsVC.swift */,
+				2A04634925124ED20086A6DF /* XibVC */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2A04634925124ED20086A6DF /* XibVC */ = {
+			isa = PBXGroup;
+			children = (
+				2A04634025124C780086A6DF /* CatsVC.xib */,
+			);
+			path = XibVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,8 +156,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A04633825124C300086A6DF /* LaunchScreen.storyboard in Resources */,
+				2A04634625124EA70086A6DF /* CatInformationCell.xib in Resources */,
+				2A04634225124C780086A6DF /* CatsVC.xib in Resources */,
 				2A04633525124C300086A6DF /* Assets.xcassets in Resources */,
-				2A04633325124C2E0086A6DF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +169,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A04633025124C2E0086A6DF /* ViewController.swift in Sources */,
 				2A04632C25124C2E0086A6DF /* AppDelegate.swift in Sources */,
+				2A04634525124EA70086A6DF /* CatInformationCell.swift in Sources */,
 				2A04632E25124C2E0086A6DF /* SceneDelegate.swift in Sources */,
+				2A04634125124C780086A6DF /* CatsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		2A04633125124C2E0086A6DF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2A04633225124C2E0086A6DF /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2A04633625124C300086A6DF /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
