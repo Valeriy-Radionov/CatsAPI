@@ -16,10 +16,3 @@ struct CatsModel: Codable {
     let height: Int
     let categories: [Category]?
 }
-
-
-
-
-
-
-

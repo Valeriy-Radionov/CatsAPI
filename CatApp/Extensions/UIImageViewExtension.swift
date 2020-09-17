@@ -1,5 +1,5 @@
 //
-//  UIImageView Extension.swift
+//  UIImageViewExtension.swift
 //  CatApp
 //
 //  Created by Valera on 9/17/20.
@@ -22,6 +22,6 @@ extension UIImageView {
                 let image = UIImage(data: data)
                 self.image = image
             })
-            
         }).resume()
-    }}
+    }
+}

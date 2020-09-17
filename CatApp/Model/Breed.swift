@@ -12,9 +12,9 @@ struct Breed: Codable {
     let weight: Weight
     let id: String
     let name: String
-    let cfaURL: String
+    let cfaURL: String?
     let vetstreetURL: String
-    let vcahospitalsURL: String
+    let vcahospitalsURL: String?
     let temperament: String
     let origin: String
     let countryCodes: String
@@ -22,7 +22,7 @@ struct Breed: Codable {
     let breedDescription: String
     let lifeSpan: String
     let indoor: Int
-    let altNames: String
+    let altNames: String?
     let adaptability: Int
     let affectionLevel: Int
     let childFriendly: Int
@@ -75,4 +75,3 @@ struct Breed: Codable {
             case hypoallergenic
         }
     }
-
