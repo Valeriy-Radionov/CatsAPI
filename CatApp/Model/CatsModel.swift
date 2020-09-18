@@ -13,13 +13,6 @@ struct CatsModel: Codable {
     let id: String
     let url: String
     let width: Int
-    let height: Int
+    var height: Int
     let categories: [Category]?
 }
-
-
-
-
-
-
-
