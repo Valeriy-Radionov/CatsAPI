@@ -10,19 +10,28 @@ import UIKit
 
 class CatsViewController: UIViewController {
     
-    let cellIdentifier = String.init(describing: CatInformationCell.self)
-    var networkService = NetworkService()
+    private let cellIdentifier = String.init(describing: CatInformationCell.self)
+    private let networkService = NetworkService()
     var catsArray = [CatsModel]()
-    let defaultCatsCount = 15
-    var refreshControl = UIRefreshControl()
-    
-    @IBOutlet var searchController: UISearchBar!
+    private var filteredCats = [CatsModel]()
+    private let defaultCatsCount = 15
+    private let refreshControl = UIRefreshControl()
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    // search query activation
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
+    private let searchController = UISearchController(searchResultsController: nil )
     @IBOutlet var catsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cellRegistration(nameCell: cellIdentifier, nibName: cellIdentifier)
         getDataCats()
+        settingsSearchController()
     }
     
     private func getDataCats(page: Int = 1) {
@@ -45,17 +54,37 @@ class CatsViewController: UIViewController {
         let nibName = UINib(nibName: nibName, bundle: nil)
         catsTableView.register(nibName, forCellReuseIdentifier: nameCell)
     }
+    
+    private func settingsSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search cat"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
 }
 
 // MARK: UITableViewDataSource 
 extension CatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredCats.count
+        }
         return catsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = catsTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
-        cell.modelCat = catsArray[indexPath.row]
+        
+        var arrayInfoCats: CatsModel
+        
+        if isFiltering {
+            arrayInfoCats = filteredCats[indexPath.row]
+        } else {
+            arrayInfoCats = catsArray[indexPath.row]
+        }
+        
+        cell.modelCat = arrayInfoCats
         
         return cell
     }
@@ -88,5 +117,19 @@ extension CatsViewController {
         getDataCats()
         self.catsTableView.reloadData()
         self.refreshControl.endRefreshing()
+    }
+}
+
+// MARK:
+extension CatsViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        filteredCats = catsArray.filter({ (cats: CatsModel) -> Bool in
+            return cats.id.lowercased().contains(searchText.lowercased())
+        })
+        catsTableView.reloadData()
     }
 }
