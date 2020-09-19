@@ -13,9 +13,9 @@ class CatsViewController: UIViewController {
     private let cellIdentifier = String.init(describing: CatInformationCell.self)
     private let networkService = NetworkService()
     var catsArray = [CatsModel]()
-    private var filteredCats = [CatsModel]()
     private let defaultCatsCount = 15
     private let refreshControl = UIRefreshControl()
+    private var filteredCats = [CatsModel]()
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
@@ -25,6 +25,7 @@ class CatsViewController: UIViewController {
         return searchController.isActive && !searchBarIsEmpty
     }
     private let searchController = UISearchController(searchResultsController: nil )
+    
     @IBOutlet var catsTableView: UITableView!
     
     override func viewDidLoad() {
@@ -67,25 +68,15 @@ class CatsViewController: UIViewController {
 // MARK: UITableViewDataSource 
 extension CatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredCats.count
-        }
-        return catsArray.count
+        return isFiltering ? filteredCats.count : catsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = catsTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
-        
         var arrayInfoCats: CatsModel
         
-        if isFiltering {
-            arrayInfoCats = filteredCats[indexPath.row]
-        } else {
-            arrayInfoCats = catsArray[indexPath.row]
-        }
-        
+        arrayInfoCats = isFiltering ? filteredCats[indexPath.row] : catsArray[indexPath.row]
         cell.modelCat = arrayInfoCats
-        
         return cell
     }
 }
@@ -120,7 +111,7 @@ extension CatsViewController {
     }
 }
 
-// MARK:
+// MARK: UISearchResultsUpdating
 extension CatsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
