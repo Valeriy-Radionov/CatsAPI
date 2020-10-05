@@ -16,7 +16,8 @@ class CatInformationCell: UITableViewCell {
         didSet {
             infoCat.text = modelCat?.id
             imageCat.imageFromServerURL(urlString: modelCat!.url)
-// Преобразование Int в String modelCat?.width
+//            guard let string = modelCat?.width else { return }
+//            infoCat.text = "\(string)"
         }
     }
 }

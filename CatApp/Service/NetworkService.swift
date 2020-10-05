@@ -8,9 +8,9 @@
 
 import Foundation
 
-class NetworkService {
-    static let numberOfItems = 15
-    func getDataJSON(page: Int = 0, limit: Int = 15, completion: @escaping (Result<[CatsModel], Error>) -> ()) {
+class NetworkService: NetworkServiceProtocol {
+    
+    func getDataJSON(page: Int, limit: Int, completion: @escaping (Result<[CatsModel], Error>) -> ()) {
         guard let url = URL(string: "https://api.thecatapi.com/v1/images/search?limit=\(limit)&\(page)") else {
             completion(.failure(NetworkServiceError.invaliURL))
             return

@@ -16,6 +16,6 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginButton(_ sender: UIButton) {
-        navigationController?.pushViewController(CatsViewController(), animated: true)
+        navigationController?.pushViewController(ModulBuilder.createMainModule(), animated: true)
     }
 }

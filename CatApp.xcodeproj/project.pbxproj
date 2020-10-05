@@ -22,6 +22,10 @@
 		2A20E0DC2514B56E00DBE03E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20E0DA2514B56E00DBE03E /* LoginViewController.swift */; };
 		2A20E0DD2514B56E00DBE03E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A20E0DB2514B56E00DBE03E /* LoginViewController.xib */; };
 		2A20E0DF2514C85300DBE03E /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20E0DE2514C85300DBE03E /* NetworkServiceError.swift */; };
+		2A5D61912526382900681A59 /* CatPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D61902526382900681A59 /* CatPresenter.swift */; };
+		2A5D61932526384D00681A59 /* ModulBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D61922526384D00681A59 /* ModulBuilder.swift */; };
+		2A5D61952526387100681A59 /* CatModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D61942526387100681A59 /* CatModul.swift */; };
+		2A5D619725263E2C00681A59 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D619625263E2C00681A59 /* NetworkServiceProtocol.swift */; };
 		2A9925BD251273E100F03261 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9925BC251273E100F03261 /* NetworkService.swift */; };
 		2A9925BF2512769400F03261 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9925BE2512769400F03261 /* Category.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +48,10 @@
 		2A20E0DA2514B56E00DBE03E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2A20E0DB2514B56E00DBE03E /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		2A20E0DE2514C85300DBE03E /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
+		2A5D61902526382900681A59 /* CatPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatPresenter.swift; sourceTree = "<group>"; };
+		2A5D61922526384D00681A59 /* ModulBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulBuilder.swift; sourceTree = "<group>"; };
+		2A5D61942526387100681A59 /* CatModul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatModul.swift; sourceTree = "<group>"; };
+		2A5D619625263E2C00681A59 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		2A9925BC251273E100F03261 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		2A9925BE2512769400F03261 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,9 +95,9 @@
 			isa = PBXGroup;
 			children = (
 				2A046370251260A50086A6DF /* Model */,
-				2A046375251262210086A6DF /* Managers */,
-				2A04634825124EBD0086A6DF /* ViewControllers */,
-				2A20E0E125151F4B00DBE03E /* View */,
+				2A046375251262210086A6DF /* Service */,
+				2A5D618F252637C200681A59 /* InputModul */,
+				2A04634825124EBD0086A6DF /* MainModul */,
 				2A038C76251374BC005018B8 /* Extensions */,
 				2A20E0E025151EFD00DBE03E /* SupportingFiles */,
 			);
@@ -105,15 +113,17 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		2A04634825124EBD0086A6DF /* ViewControllers */ = {
+		2A04634825124EBD0086A6DF /* MainModul */ = {
 			isa = PBXGroup;
 			children = (
 				2A04633F25124C780086A6DF /* CatsViewController.swift */,
 				2A04634025124C780086A6DF /* CatsViewController.xib */,
-				2A20E0DA2514B56E00DBE03E /* LoginViewController.swift */,
-				2A20E0DB2514B56E00DBE03E /* LoginViewController.xib */,
+				2A5D61902526382900681A59 /* CatPresenter.swift */,
+				2A5D61942526387100681A59 /* CatModul.swift */,
+				2A5D61922526384D00681A59 /* ModulBuilder.swift */,
+				2A04634725124EB30086A6DF /* Cell */,
 			);
-			path = ViewControllers;
+			path = MainModul;
 			sourceTree = "<group>";
 		};
 		2A046370251260A50086A6DF /* Model */ = {
@@ -127,13 +137,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		2A046375251262210086A6DF /* Managers */ = {
+		2A046375251262210086A6DF /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				2A9925BC251273E100F03261 /* NetworkService.swift */,
+				2A5D619625263E2C00681A59 /* NetworkServiceProtocol.swift */,
 				2A20E0DE2514C85300DBE03E /* NetworkServiceError.swift */,
 			);
-			path = Managers;
+			path = Service;
 			sourceTree = "<group>";
 		};
 		2A20E0E025151EFD00DBE03E /* SupportingFiles */ = {
@@ -148,12 +159,13 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		2A20E0E125151F4B00DBE03E /* View */ = {
+		2A5D618F252637C200681A59 /* InputModul */ = {
 			isa = PBXGroup;
 			children = (
-				2A04634725124EB30086A6DF /* Cell */,
+				2A20E0DA2514B56E00DBE03E /* LoginViewController.swift */,
+				2A20E0DB2514B56E00DBE03E /* LoginViewController.xib */,
 			);
-			path = View;
+			path = InputModul;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,7 +243,10 @@
 			files = (
 				2A04632C25124C2E0086A6DF /* AppDelegate.swift in Sources */,
 				2A20E0DF2514C85300DBE03E /* NetworkServiceError.swift in Sources */,
+				2A5D61952526387100681A59 /* CatModul.swift in Sources */,
 				2A04634525124EA70086A6DF /* CatInformationCell.swift in Sources */,
+				2A5D619725263E2C00681A59 /* NetworkServiceProtocol.swift in Sources */,
+				2A5D61912526382900681A59 /* CatPresenter.swift in Sources */,
 				2A04636F2512609E0086A6DF /* CatsModel.swift in Sources */,
 				2A038C75251374B7005018B8 /* UIImageViewExtension.swift in Sources */,
 				2A9925BD251273E100F03261 /* NetworkService.swift in Sources */,
@@ -241,6 +256,7 @@
 				2A9925BF2512769400F03261 /* Category.swift in Sources */,
 				2A0DA6A125128A41004D4D24 /* Weight.swift in Sources */,
 				2A20E0DC2514B56E00DBE03E /* LoginViewController.swift in Sources */,
+				2A5D61932526384D00681A59 /* ModulBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

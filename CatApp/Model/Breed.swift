@@ -42,7 +42,7 @@ struct Breed: Codable {
     let rex: Int
     let suppressedTail: Int
     let shortLegs: Int
-    let wikipediaURL: String
+    let wikipediaURL: String?
     let hypoallergenic: Int
     
     enum CodingKeys: String, CodingKey {
