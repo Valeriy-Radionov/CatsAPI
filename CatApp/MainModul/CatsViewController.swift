@@ -11,101 +11,103 @@ import UIKit
 class CatsViewController: UIViewController {
     
     var presenter: CatPresenterProtocol!
-    private let cellIdentifier = String.init(describing: CatInformationCell.self)
+
+    private let cellIdentifier = String(describing: CatInformationCell.self)
+
+    private var cells: [CatCellPresenter] = []
+
     private let defaultCatsCount = 15
     private let refreshControl = UIRefreshControl()
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
-    // search query activation
-    private var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    private let searchController = UISearchController(searchResultsController: nil )
-    
-    @IBOutlet var catsTableView: UITableView!
+
+    private let searchController = UISearchController(searchResultsController: nil)
+    @IBOutlet private var table: UITableView!
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-            cellRegistration(nameCell: cellIdentifier, nibName: cellIdentifier)
-            settingsSearchController()
-            presenter.getCat(page: 1)
-            refreshTableCats()
-        }
-        
-        private func cellRegistration(nameCell: String, nibName: String) {
-            let nibName = UINib(nibName: nibName, bundle: nil)
-            self.catsTableView.register(nibName, forCellReuseIdentifier: nameCell)
-        }
-        
-        private func settingsSearchController() {
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            searchController.searchBar.placeholder = "Search cat"
-            navigationItem.searchController = searchController
-            definesPresentationContext = true
-        }
+        super.viewDidLoad()
+
+        configureTable()
+        configureSearchController()
+
+        presenter.reload()
+    }
+}
+
+private extension CatsViewController {
+    func configureTable() {
+        let nibName = UINib(nibName: cellIdentifier, bundle: nil)
+        table.register(nibName, forCellReuseIdentifier: cellIdentifier)
+        table.tableFooterView = UIView()
     }
 
-    // MARK: UITableViewDataSource
-    extension CatsViewController: UITableViewDataSource {
-        
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return isFiltering ? presenter.filteredCats.count : presenter.catArray.count
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            guard let cell = catsTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
-            
-            cell.modelCat = isFiltering ? presenter.filteredCats[indexPath.row] : presenter.catArray[indexPath.row]
-            
-            return cell
-        }
+    private func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search cat"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+}
+
+// MARK: UITableViewDataSource
+extension CatsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.cellsCount()
     }
 
-    // MARK: UITableViewDelegate
-    extension CatsViewController: UITableViewDelegate {
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 100
-        }
-        
-        func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-            if indexPath.row == presenter.catArray.count - 1 {
-                let page = presenter.catArray.count / defaultCatsCount
-                print(page)
-                presenter.getCat(page: page)
-            }
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = table.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
+        cell.presenter = presenter.cellAt(index: indexPath.row)
+        return cell
+    }
+}
+
+// MARK: UITableViewDelegate
+extension CatsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 
-    // MARK: CatViewProtocol
-    extension CatsViewController: CatViewProtocol {
-        func reloadData() {
-            self.catsTableView.reloadData()
-        }
-        
-        func refreshTable() {
-            self.refreshControl.endRefreshing()
-        }
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        presenter.willDisplay(index: indexPath.row)
+    }
+}
+
+// MARK: CatViewProtocol
+extension CatsViewController: CatViewProtocol {
+    func reload() {
+        table.reloadData()
     }
 
-    // MARK: Refresh
-    extension CatsViewController {
-        func refreshTableCats() {
-            self.refreshControl.attributedTitle = NSAttributedString(string: "Update")
-            self.refreshControl.addTarget(self, action: #selector(self.update), for: .valueChanged )
-            self.catsTableView.refreshControl = self.refreshControl
-        }
-        
-        @objc func update() {
-            presenter.refreshTable()
-        }
+    func append(idices: [IndexPath]) {
+        table.beginUpdates()
+        table.insertRows(at: idices, with: .automatic)
+        table.endUpdates()
+    }
+}
+
+// MARK: Refresh
+extension CatsViewController {
+    func refreshTableCats() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Update")
+        refreshControl.addTarget(self, action: #selector(update), for: .valueChanged)
+        table.refreshControl = refreshControl
     }
 
-    // MARK: UISearchResultsUpdating
-    extension CatsViewController: UISearchResultsUpdating {
-        func updateSearchResults(for searchController: UISearchController) {
-            presenter.filterContentForSearchText(searchController.searchBar.text!)
-        }
+    @objc func update() {
+        presenter.reload()
     }
+}
+
+// MARK: UISearchResultsUpdating
+extension CatsViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter.searchFor(text: searchController.searchBar.text!)
+    }
+}

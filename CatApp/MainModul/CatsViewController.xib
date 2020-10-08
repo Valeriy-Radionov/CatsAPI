@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CatsViewController" customModule="CatApp" customModuleProvider="target">
             <connections>
-                <outlet property="catsTableView" destination="NM2-4a-Npz" id="BU0-U6-NTP"/>
+                <outlet property="table" destination="NM2-4a-Npz" id="ciQ-0p-MNU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

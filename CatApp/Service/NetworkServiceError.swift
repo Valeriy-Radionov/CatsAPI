@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 enum NetworkServiceError: Error {
     case invaliURL
     case incorrectDataJSON
