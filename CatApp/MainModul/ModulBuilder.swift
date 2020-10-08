@@ -14,8 +14,8 @@ protocol ModulBuilderProtocol {
 
 class ModulBuilder: ModulBuilderProtocol {
     static func createMainModule() -> UIViewController {
-        let catArray = [CatsModel]()
-        let filteredCats = [CatsModel]()
+        let catArray = [CatCellPresenter]()
+        let filteredCats = [CatCellPresenter]()
         let view = CatsViewController()
         let networkService = NetworkService()
         let presenter = CatPresenter(view: view, networkService: networkService, catArray: catArray, filteredCats: filteredCats)

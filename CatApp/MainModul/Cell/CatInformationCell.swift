@@ -12,7 +12,7 @@ class CatInformationCell: UITableViewCell {
     
     @IBOutlet private var imageCat: UIImageView!
     @IBOutlet private var infoCat: UILabel!
-    var modelCat: CatsModel? {
+    var modelCat: CatCellPresenter? {
         didSet {
             infoCat.text = modelCat?.id
             imageCat.imageFromServerURL(urlString: modelCat!.url)

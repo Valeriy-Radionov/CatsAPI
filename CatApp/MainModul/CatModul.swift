@@ -15,22 +15,22 @@ protocol CatViewProtocol: class {
 }
 
 protocol CatPresenterProtocol: class {
-    var catArray: [CatsModel] { get set }
-    var filteredCats: [CatsModel] { get set }
-    init(view: CatViewProtocol, networkService: NetworkServiceProtocol, catArray: [CatsModel], filteredCats: [CatsModel])
+    var catArray: [CatCellPresenter] { get set }
+    var filteredCats: [CatCellPresenter] { get set }
+    init(view: CatViewProtocol, networkService: NetworkServiceProtocol, catArray: [CatCellPresenter], filteredCats: [CatCellPresenter])
     func getCat(page: Int)
     func refreshTable()
     func filterContentForSearchText(_ searchText: String)
 }
 
-struct CatCell {
+struct CatCellPresenter {
     let id: String
     let url: String
     let breeds: [BreedCell]
 }
 
 struct BreedCell {
-    let weight: Float
+    let weight: String
     let name: String
     let wiki: String?
     let country: String
