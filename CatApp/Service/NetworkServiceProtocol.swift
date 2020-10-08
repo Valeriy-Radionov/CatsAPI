@@ -9,6 +9,5 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func getDataJSON(page: Int, limit: Int, completion: @escaping (Result<[CatsModel], Error>) -> ())
+    func getDataJSON(page: Int, limit: Int, completion: @escaping (Result<[CatModel], Error>) -> ())
 }
-

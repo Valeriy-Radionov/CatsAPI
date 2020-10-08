@@ -10,7 +10,7 @@ import Foundation
 
 class NetworkService: NetworkServiceProtocol {
     
-    func getDataJSON(page: Int, limit: Int, completion: @escaping (Result<[CatsModel], Error>) -> ()) {
+    func getDataJSON(page: Int, limit: Int, completion: @escaping (Result<[CatModel], Error>) -> ()) {
         guard let url = URL(string: "https://api.thecatapi.com/v1/images/search?limit=\(limit)&\(page)") else {
             completion(.failure(NetworkServiceError.invaliURL))
             return
@@ -22,7 +22,7 @@ class NetworkService: NetworkServiceProtocol {
                         completion(.failure(NetworkServiceError.incorrectDataJSON))
                         return
                     }
-                    let infoCatArray = try JSONDecoder().decode([CatsModel].self, from: data)
+                    let infoCatArray = try JSONDecoder().decode([CatModel].self, from: data)
                     completion(.success(infoCatArray))
                 } catch {
                     completion(.failure(error))
