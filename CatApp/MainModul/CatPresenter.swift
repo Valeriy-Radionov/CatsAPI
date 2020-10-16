@@ -7,60 +7,108 @@
 //
 
 import Foundation
+import UIKit
 
 class CatPresenter: CatPresenterProtocol {
-    
-    var catArray: [CatCellPresenter]
-    var defaultCatsCount = 15
-    var filteredCats: [CatCellPresenter]
-    weak var view: CatViewProtocol?
-    let networkService: NetworkServiceProtocol!
-    
-    required init(view: CatViewProtocol, networkService: NetworkServiceProtocol, catArray: [CatCellPresenter], filteredCats: [CatCellPresenter]) {
-        self.view = view
-        self.networkService = networkService
-        self.catArray = catArray
-        self.filteredCats = filteredCats
-        getCat()
+    private enum Constants {
+        static let defaultCatsCount = 15
     }
     
+    weak var view: CatViewProtocol?
+    private let networkService: NetworkServiceProtocol!
     
-    func getCat(page: Int = 1) {
-        networkService.getDataJSON(page: page, limit: defaultCatsCount) { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async {  [weak self] in
-                switch result {
-                case .success(let cats):
-                    var breedArray: [BreedCell] = []
-                    for cat in cats {
-                        for breed in cat.breeds {
-                            let breed = BreedCell(weight: breed.weight.metric, name: breed.name, wiki: breed.wikipediaURL, country: breed.countryCode)
-                            breedArray.append(breed)
-                            let cat = CatCellPresenter(id: cat.id, url: cat.url, breeds: breedArray)
-                            self?.catArray.append(cat)
-                            print("\(self!.catArray)")
-                        }
-                    }
-                case .failure(let error):
-                    print("error: \(error)")
-                }
-                self?.view?.reloadData()
+    private var cats: [CatCellPresenter] = []
+    private var filteredCats: [CatCellPresenter] = []
+    private var isFiltering = false
+    
+    init(view: CatViewProtocol,
+         networkService: NetworkServiceProtocol) {
+        self.view = view
+        self.networkService = networkService
+    }
+    
+    func cellsCount() -> Int {
+        return isFiltering ? filteredCats.count : cats.count
+    }
+    
+    func cellAt(index: Int) -> CatCellPresenter? {
+        let source = isFiltering ? filteredCats : cats
+        guard source.count > index else { return nil }
+        return source[index]
+    }
+    
+    func reload() {
+        cats = []
+        getCats(page: 1) { [weak self] result in
+            switch result {
+            case .success(let cats):
+                self?.cats = cats
+                self?.view?.reload()
+            case .failure(let error):
+                print(error)
+                self?.view?.errorAlert()
             }
         }
     }
     
-    func refreshTable() {
-        catArray.removeAll()
-        getCat(page: 1)
-        view?.refreshTable()
-        view?.reloadData()
+    func willDisplay(index: Int) {
+        guard !isFiltering else { return }
+        
+        if index == cats.count - 1 {
+            let page = cats.count / Constants.defaultCatsCount
+            print(page)
+            getCats(page: page) { [weak self] result in
+                let existCatsCount = self?.cats.count ?? 0
+                switch result {
+                case .success(let cats):
+                    let indices = cats.enumerated()
+                        .map { IndexPath(row: $0.offset + existCatsCount, section: 0) }
+                    self?.cats.append(contentsOf: cats)
+                    self?.view?.append(idices: indices)
+                case .failure(let error):
+                    print(error)
+                    self?.view?.errorAlert()
+                }
+            }
+        }
     }
     
-    func filterContentForSearchText(_ searchText: String) {
-        filteredCats = catArray.filter({ (cats: CatCellPresenter) -> Bool in
-            return cats.id.lowercased().contains(searchText.lowercased())
-        })
-        view?.reloadData()
+    func switchToSearch() {
+        isFiltering = true
+    }
+    
+    func switchToNormal() {
+        isFiltering = false
+        filteredCats = cats
+        self.view?.reload()
+    }
+    
+    func searchFor(text: String) {
+        filteredCats = cats.filter { $0.id.lowercased().contains(text.lowercased()) }
+        self.view?.reload()
     }
 }
 
+private extension CatPresenter {
+    func getCats(page: Int = 1, completion: @escaping (Result<[CatCellPresenter], Error>) -> ()) {
+        networkService.getDataJSON(page: page, limit: Constants.defaultCatsCount) { result in
+            let transformed = result.map { models -> [CatCellPresenter] in
+                models.map(CatCellPresenter.init(model:))
+            }
+            
+            DispatchQueue.main.async {
+                completion(transformed)
+            }
+        }
+    }
+}
+
+private extension CatCellPresenter {
+    init(model: CatModel) {
+        id = model.id
+        url = model.url
+        breeds = model.breeds.map({ breed -> BreedPresenter in
+            BreedPresenter(name: breed.name, wiki: breed.wikipediaURL, country: breed.countryCode)
+        })
+    }
+}

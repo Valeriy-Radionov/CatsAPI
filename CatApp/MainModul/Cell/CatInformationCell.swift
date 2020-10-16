@@ -11,13 +11,15 @@ import UIKit
 class CatInformationCell: UITableViewCell {
     
     @IBOutlet private var imageCat: UIImageView!
-    @IBOutlet private var infoCat: UILabel!
-    var modelCat: CatCellPresenter? {
+    @IBOutlet  var name: UILabel!
+    
+    var presenter: CatCellPresenter? {
         didSet {
-            infoCat.text = modelCat?.id
-            imageCat.imageFromServerURL(urlString: modelCat!.url)
+            name.text = presenter?.breeds.first?.name
+//            imageCat.imageFromServerURL(urlString: presenter!.url)
 //            guard let string = modelCat?.width else { return }
 //            infoCat.text = "\(string)"
         }
     }
+    
 }

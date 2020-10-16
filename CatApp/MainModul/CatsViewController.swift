@@ -11,35 +11,34 @@ import UIKit
 class CatsViewController: UIViewController {
     
     var presenter: CatPresenterProtocol!
-    private let cellIdentifier = String.init(describing: CatInformationCell.self)
-    private let defaultCatsCount = 15
+    private let cellIdentifier = String(describing: CatInformationCell.self)
+    private var cells: [CatCellPresenter] = []
     private let refreshControl = UIRefreshControl()
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
-    // search query activation
-    private var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    private let searchController = UISearchController(searchResultsController: nil )
     
-    @IBOutlet var catsTableView: UITableView!
+    private let searchController = UISearchController(searchResultsController: nil)
+    @IBOutlet private var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cellRegistration(nameCell: cellIdentifier, nibName: cellIdentifier)
-        settingsSearchController()
-        presenter.getCat(page: 1)
         refreshTableCats()
+        configureTable()
+        configureSearchController()
+        presenter.reload()
+    }
+}
+
+private extension CatsViewController {
+    func configureTable() {
+        let nibName = UINib(nibName: cellIdentifier, bundle: nil)
+        table.register(nibName, forCellReuseIdentifier: cellIdentifier)
+        table.tableFooterView = UIView()
     }
     
-    private func cellRegistration(nameCell: String, nibName: String) {
-        let nibName = UINib(nibName: nibName, bundle: nil)
-        self.catsTableView.register(nibName, forCellReuseIdentifier: nameCell)
-    }
-    
-    private func settingsSearchController() {
+    private func configureSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search cat"
@@ -50,68 +49,74 @@ class CatsViewController: UIViewController {
 
 // MARK: UITableViewDataSource
 extension CatsViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering ? presenter.filteredCats.count : presenter.catArray.count
+        return presenter.cellsCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = catsTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
-        
-        cell.modelCat = isFiltering ? presenter.filteredCats[indexPath.row] : presenter.catArray[indexPath.row]
-        
+        guard let cell = table.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
+        cell.presenter = presenter.cellAt(index: indexPath.row)
         return cell
     }
 }
 
 // MARK: UITableViewDelegate
 extension CatsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if presenter.catArray[indexPath.row].breeds.count == 1 {
-            return 100
-        } else if presenter.catArray[indexPath.row].breeds.count == 2 {
-            return 200
-        } else {
-            return 300
-        }
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == presenter.catArray.count - 1 {
-            let page = presenter.catArray.count / defaultCatsCount
-            print(page)
-            presenter.getCat(page: page)
-        }
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        presenter.willDisplay(index: indexPath.row)
     }
 }
 
 // MARK: CatViewProtocol
 extension CatsViewController: CatViewProtocol {
-    func reloadData() {
-        self.catsTableView.reloadData()
+    func errorAlert() {
+        let alert = UIAlertController(title: "Error", message: "data not loaded", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
     
-    func refreshTable() {
-        self.refreshControl.endRefreshing()
+    func reload() {
+        table.reloadData()
+    }
+    
+    func append(idices: [IndexPath]) {
+        table.beginUpdates()
+        table.insertRows(at: idices, with: .automatic)
+        table.endUpdates()
     }
 }
 
 // MARK: Refresh
 extension CatsViewController {
     func refreshTableCats() {
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Update")
-        self.refreshControl.addTarget(self, action: #selector(self.update), for: .valueChanged )
-        self.catsTableView.refreshControl = self.refreshControl
+        refreshControl.attributedTitle = NSAttributedString(string: "Update")
+        refreshControl.addTarget(self, action: #selector(update), for: .valueChanged)
+        table.refreshControl = refreshControl
     }
     
     @objc func update() {
-        presenter.refreshTable()
+        presenter.reload()
+        refreshControl.endRefreshing()
     }
 }
 
 // MARK: UISearchResultsUpdating
 extension CatsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        presenter.filterContentForSearchText(searchController.searchBar.text!)
+        if !searchBarIsEmpty {
+            presenter.switchToSearch()
+            presenter.searchFor(text: searchController.searchBar.text!)
+        } else {
+            presenter.switchToNormal()
+        }
     }
 }
