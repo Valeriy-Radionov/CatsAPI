@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A038C75251374B7005018B8 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A038C74251374B7005018B8 /* UIImageViewExtension.swift */; };
 		2A04632C25124C2E0086A6DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04632B25124C2E0086A6DF /* AppDelegate.swift */; };
 		2A04632E25124C2E0086A6DF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04632D25124C2E0086A6DF /* SceneDelegate.swift */; };
 		2A04633525124C300086A6DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A04633425124C300086A6DF /* Assets.xcassets */; };
@@ -21,17 +20,31 @@
 		2A20E0DC2514B56E00DBE03E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20E0DA2514B56E00DBE03E /* LoginViewController.swift */; };
 		2A20E0DD2514B56E00DBE03E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A20E0DB2514B56E00DBE03E /* LoginViewController.xib */; };
 		2A20E0DF2514C85300DBE03E /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A20E0DE2514C85300DBE03E /* NetworkServiceError.swift */; };
+		2A2D947625408B8B00D73FB0 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2D947525408B8B00D73FB0 /* Extension+UIImageView.swift */; };
 		2A5D61912526382900681A59 /* CatPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D61902526382900681A59 /* CatPresenter.swift */; };
 		2A5D61932526384D00681A59 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D61922526384D00681A59 /* ModuleBuilder.swift */; };
 		2A5D61952526387100681A59 /* CatModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D61942526387100681A59 /* CatModule.swift */; };
 		2A5D619725263E2C00681A59 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5D619625263E2C00681A59 /* NetworkServiceProtocol.swift */; };
 		2A9925BD251273E100F03261 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9925BC251273E100F03261 /* NetworkService.swift */; };
 		2A9925BF2512769400F03261 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9925BE2512769400F03261 /* Category.swift */; };
+		2AB65494253A454A00054ECE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB65493253A454A00054ECE /* Kingfisher */; };
 		ECB5C224252F9BEF0092FE86 /* CatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04636E2512609E0086A6DF /* CatModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2AB65491253A42F500054ECE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		2A038C74251374B7005018B8 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		2A04632825124C2E0086A6DF /* CatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A04632B25124C2E0086A6DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A04632D25124C2E0086A6DF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +61,7 @@
 		2A20E0DA2514B56E00DBE03E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2A20E0DB2514B56E00DBE03E /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		2A20E0DE2514C85300DBE03E /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
+		2A2D947525408B8B00D73FB0 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		2A5D61902526382900681A59 /* CatPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatPresenter.swift; sourceTree = "<group>"; };
 		2A5D61922526384D00681A59 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		2A5D61942526387100681A59 /* CatModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatModule.swift; sourceTree = "<group>"; };
@@ -61,20 +75,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AB65494253A454A00054ECE /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2A038C76251374BC005018B8 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				2A038C74251374B7005018B8 /* UIImageViewExtension.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		2A04631F25124C2E0086A6DF = {
 			isa = PBXGroup;
 			children = (
@@ -98,7 +105,7 @@
 				2A046375251262210086A6DF /* Service */,
 				2A5D618F252637C200681A59 /* InputModul */,
 				2A04634825124EBD0086A6DF /* MainModul */,
-				2A038C76251374BC005018B8 /* Extensions */,
+				2A2D947425408B6500D73FB0 /* Extensions */,
 				2A20E0E025151EFD00DBE03E /* SupportingFiles */,
 			);
 			path = CatApp;
@@ -159,6 +166,14 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		2A2D947425408B6500D73FB0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2A2D947525408B8B00D73FB0 /* Extension+UIImageView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		2A5D618F252637C200681A59 /* InputModul */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,12 +193,16 @@
 				2A04632425124C2E0086A6DF /* Sources */,
 				2A04632525124C2E0086A6DF /* Frameworks */,
 				2A04632625124C2E0086A6DF /* Resources */,
+				2AB65491253A42F500054ECE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = CatApp;
+			packageProductDependencies = (
+				2AB65493253A454A00054ECE /* Kingfisher */,
+			);
 			productName = CatApp;
 			productReference = 2A04632825124C2E0086A6DF /* CatApp.app */;
 			productType = "com.apple.product-type.application";
@@ -212,6 +231,9 @@
 				Base,
 			);
 			mainGroup = 2A04631F25124C2E0086A6DF;
+			packageReferences = (
+				2AB65492253A454A00054ECE /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 2A04632925124C2E0086A6DF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -248,10 +270,10 @@
 				2A04634525124EA70086A6DF /* CatInformationCell.swift in Sources */,
 				2A5D619725263E2C00681A59 /* NetworkServiceProtocol.swift in Sources */,
 				2A5D61912526382900681A59 /* CatPresenter.swift in Sources */,
-				2A038C75251374B7005018B8 /* UIImageViewExtension.swift in Sources */,
 				2A9925BD251273E100F03261 /* NetworkService.swift in Sources */,
 				2A04632E25124C2E0086A6DF /* SceneDelegate.swift in Sources */,
 				2A0463722512614B0086A6DF /* Breed.swift in Sources */,
+				2A2D947625408B8B00D73FB0 /* Extension+UIImageView.swift in Sources */,
 				2A04634125124C780086A6DF /* CatsViewController.swift in Sources */,
 				2A9925BF2512769400F03261 /* Category.swift in Sources */,
 				2A0DA6A125128A41004D4D24 /* Weight.swift in Sources */,
@@ -446,6 +468,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2AB65492253A454A00054ECE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.15.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2AB65493253A454A00054ECE /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2AB65492253A454A00054ECE /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2A04632025124C2E0086A6DF /* Project object */;
 }

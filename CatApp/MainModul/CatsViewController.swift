@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Foundation
 class CatsViewController: UIViewController {
     
     var presenter: CatPresenterProtocol!
@@ -29,6 +29,11 @@ class CatsViewController: UIViewController {
         configureSearchController()
         presenter.reload()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
 }
 
 private extension CatsViewController {
@@ -55,22 +60,30 @@ extension CatsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = table.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return UITableViewCell() }
-        cell.presenter = presenter.cellAt(index: indexPath.row)
+            cell.presenter = self.presenter.cellAt(index: indexPath.row)
+            self.table.rowHeight = cell.heightConstraint.constant
         return cell
     }
 }
 
 // MARK: UITableViewDelegate
 extension CatsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView,
-                   heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 100
+//    }
+//    func tableView(_ tableView: UITableView,
+//                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//        return 100
+//    }
     
     func tableView(_ tableView: UITableView,
                    willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
         presenter.willDisplay(index: indexPath.row)
+//         guard let cell = table.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CatInformationCell else { return }
+//        self.table.rowHeight = cell.heightConstraint.constant
+        
     }
 }
 
@@ -93,6 +106,7 @@ extension CatsViewController: CatViewProtocol {
         table.insertRows(at: idices, with: .automatic)
         table.endUpdates()
     }
+
 }
 
 // MARK: Refresh
